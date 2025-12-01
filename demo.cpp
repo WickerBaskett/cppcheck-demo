@@ -2,9 +2,11 @@
 using std::cout, std::endl;
 #include <vector>
 using std::vector;
+#include <cassert>
 
 void index_out_of_bounds(int x);
 vector<int>* bad_lifetime();
+bool side_effect(int* val);
 
 int main() {
     char *str;
@@ -14,9 +16,20 @@ int main() {
         index_out_of_bounds(i);
     }  
 
-    vector<int>* vec = bad_lifetime();
-    vector<int> deref_vec = *vec;
-    cout << deref_vec[0] << endl;
+    // This will throw an unhandled exception
+    try {
+        vector<int>* vec = bad_lifetime();
+        vector<int> deref_vec = *vec;
+        cout << deref_vec[0] << endl;
+    } catch (...) {
+        cout << "Caught Exception" << endl;
+    }
+    
+    // This will behave differently between debug and release builds
+    int val = 0;
+    cout << "Before Assert: " << val << endl;
+    assert(side_effect(&val));
+    cout << "After Assert: " << val << endl;
 }
 
 
@@ -46,4 +59,13 @@ vector<int>* bad_lifetime() {
     vector<int> v = {1,2,3,4,5};
     vector<int>* v_ptr = &v;
     return v_ptr;
+}
+
+///////////////////////////////
+//  Assert with Side Effect  //
+///////////////////////////////
+
+bool side_effect(int* val) {
+    *val = 1;
+    return true;
 }
