@@ -51,6 +51,7 @@ bool side_effect(int* val) {
 //  Class Related Things  //
 ////////////////////////////
 
+// Has a private data member but no constructor
 class DemoClass {
     
     // ************** Private: Data Members **************
@@ -86,4 +87,12 @@ int main() {
     malloc(-1);
 
     DemoClass inner = {};
+
+    // We will never get into the else if block because the conditions match
+    int x = 0;
+    if (x == 0) {
+        cout << "First" << endl;
+    } else if (x == 0) {
+        cout << "Second" << endl;
+    }
 }
