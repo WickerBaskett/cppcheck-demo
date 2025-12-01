@@ -3,6 +3,7 @@ using std::cout, std::endl;
 #include <vector>
 using std::vector;
 #include <cassert>
+#include <stdlib.h>
 
 void index_out_of_bounds(int x);
 vector<int>* bad_lifetime();
@@ -30,6 +31,9 @@ int main() {
     cout << "Before Assert: " << val << endl;
     assert(side_effect(&val));
     cout << "After Assert: " << val << endl;
+
+    // Allocate negative space?
+    malloc(-1);
 }
 
 
@@ -60,6 +64,7 @@ vector<int>* bad_lifetime() {
     vector<int>* v_ptr = &v;
     return v_ptr;
 }
+
 
 ///////////////////////////////
 //  Assert with Side Effect  //
