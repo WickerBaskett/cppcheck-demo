@@ -4,6 +4,8 @@ using std::cout, std::endl;
 using std::vector;
 #include <cassert>
 #include <stdlib.h>
+#include <cstdint>
+// For int8_t
 
 void index_out_of_bounds(int x);
 vector<int>* bad_lifetime();
@@ -91,8 +93,20 @@ int main() {
     // We will never get into the else if block because the conditions match
     int x = 0;
     if (x == 0) {
-        cout << "First" << endl;
+        cout << "First if Block" << endl;
     } else if (x == 0) {
         cout << "Second" << endl;
     }
+
+    // cppcheck does not catch this!
+    int8_t value = -127;
+    cout << "VALUE: " << value << endl;
+    value = -value;
+    cout << "ABS Value: " << value << endl;
+
+    // Division by 0
+    int val_1 = 1/0;
+
+    
+
 }
