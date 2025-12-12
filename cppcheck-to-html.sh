@@ -3,4 +3,4 @@ mkdir -p out
 cppcheck --xml demo.cpp 2> xml.out
 cppcheck-htmlreport --file=xml.out --report-dir=out
 cd out
-python3 -m http.server
+python3 -m http.server 8080
